@@ -1,4 +1,4 @@
-%define version	0.98.1
+%define version	0.98.2
 %define release %mkrel 1
 
 Summary: 	GUI Download manager using wget
@@ -11,6 +11,8 @@ Source: 	ftp://ftp.gnome.org/pub/gnome/sources/gwget/%{name}-%{version}.tar.bz2
 Source1:	%{name}-16.png
 Source2:	%{name}-32.png
 Source3:	%{name}-48.png
+# Allow Epiphany 2.18: by AdamW
+Patch0:		gwget-0.98.2-epiphany.patch
 URL: 		http://gwget.sourceforge.net/
 Buildroot: 	%{_tmppath}/%{name}-%{version}-buildroot
 Buildrequires:	libgnomeui2-devel
@@ -42,6 +44,7 @@ which allows the browser to use gwget as an external file downloader.
 
 %prep
 %setup -q
+%patch0 -p1 -b .epiphany
 
 %build
 %configure2_5x --enable-epiphany-extension
@@ -66,6 +69,9 @@ EOF
 install -D -m 0644 %{SOURCE1} %{buildroot}%{_miconsdir}/%{name}.png
 install -D -m 0644 %{SOURCE2} %{buildroot}%{_iconsdir}/%{name}.png
 install -D -m 0644 %{SOURCE3} %{buildroot}%{_liconsdir}/%{name}.png
+install -D -m 0644 %{SOURCE1} %{buildroot}%{_iconsdir}/hicolor/16x16/apps/%{name}.png
+install -D -m 0644 %{SOURCE2} %{buildroot}%{_iconsdir}/hicolor/32x32/apps/%{name}.png
+install -D -m 0644 %{SOURCE3} %{buildroot}%{_iconsdir}/hicolor/48x48/apps/%{name}.png
 
 # remove files not bundled
 rm -rf %{buildroot}%{_prefix}/doc/ %{buildroot}%{_includedir}
@@ -75,6 +81,8 @@ rm -f %{buildroot}%{_libdir}/epiphany-1.*/extensions/*a
  
 %post
 %update_menus
+%update_desktop_database
+%update_icon_cache hicolor
 export GCONF_CONFIG_SOURCE=`gconftool-2 --get-default-source`
 gconftool-2 --makefile-install-rule \
   %{_sysconfdir}/gconf/schemas/%{name}.schemas &>/dev/null
@@ -86,7 +94,9 @@ if [ "$1" = "0" ]; then
 fi
 
 %postun
-%clean_menus 
+%clean_menus
+%clean_desktop_database
+%clean_icon_cache hicolor
 
 %clean
 rm -rf %{buildroot}
@@ -99,12 +109,13 @@ rm -rf %{buildroot}
 %{_datadir}/gwget/*
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/pixmaps/*
-%{_libdir}/bonobo/servers/GNOME_Gwget.server
-%{_datadir}/idl/GNOME_Gwget.idl
 %{_menudir}/%{name}
 %{_iconsdir}/%{name}.png
 %{_miconsdir}/%{name}.png
 %{_liconsdir}/%{name}.png
+%{_iconsdir}/hicolor/16x16/apps/%{name}.png
+%{_iconsdir}/hicolor/32x32/apps/%{name}.png
+%{_iconsdir}/hicolor/48x48/apps/%{name}.png
 
 %files -n epiphany-gwget
 %defattr (-,root,root)
