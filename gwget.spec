@@ -92,6 +92,7 @@ rm -rf %{buildroot}
 %doc AUTHORS COPYING ChangeLog README TODO
 %{_bindir}/*
 %{_sysconfdir}/gconf/schemas/%{name}.schemas
+%{_datadir}/dbus-1/services/*.service
 %{_datadir}/gwget/*
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/pixmaps/*
