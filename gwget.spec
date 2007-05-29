@@ -1,5 +1,5 @@
-%define version	0.98.2
-%define release %mkrel 2
+%define version	0.99
+%define release %mkrel 1
 
 Summary: 	GUI Download manager using wget
 Name: 		gwget
