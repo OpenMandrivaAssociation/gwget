@@ -11,8 +11,6 @@ Source: 	ftp://ftp.gnome.org/pub/gnome/sources/gwget/%{name}-%{version}.tar.bz2
 Source1:	%{name}-16.png
 Source2:	%{name}-32.png
 Source3:	%{name}-48.png
-# Allow Epiphany 2.18: by AdamW
-Patch0:		gwget-0.98.2-epiphany.patch
 URL: 		http://gwget.sourceforge.net/
 Buildroot: 	%{_tmppath}/%{name}-%{version}-buildroot
 Buildrequires:	libgnomeui2-devel
@@ -44,7 +42,6 @@ which allows the browser to use gwget as an external file downloader.
 
 %prep
 %setup -q
-%patch0 -p1 -b .epiphany
 
 %build
 %configure2_5x --enable-epiphany-extension
@@ -54,17 +51,6 @@ which allows the browser to use gwget as an external file downloader.
 rm -rf %{buildroot}
 export GCONF_DISABLE_MAKEFILE_SCHEMA_INSTALL=1
 %makeinstall_std
-
-mkdir -p %{buildroot}/%{_menudir}
-cat > %{buildroot}/%{_menudir}/%{name} <<EOF
-?package(%{name}): \
- command="%{_bindir}/%{name}" \
- title="Gwget download manager" \
- longtitle="Download manager using wget as backend" \
- needs="x11" \
- icon="%{name}.png" \
- section="Internet/File Transfer"
-EOF
 
 install -D -m 0644 %{SOURCE1} %{buildroot}%{_miconsdir}/%{name}.png
 install -D -m 0644 %{SOURCE2} %{buildroot}%{_iconsdir}/%{name}.png
@@ -109,7 +95,6 @@ rm -rf %{buildroot}
 %{_datadir}/gwget/*
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/pixmaps/*
-%{_menudir}/%{name}
 %{_iconsdir}/%{name}.png
 %{_miconsdir}/%{name}.png
 %{_liconsdir}/%{name}.png
