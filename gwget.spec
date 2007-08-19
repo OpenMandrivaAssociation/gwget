@@ -1,5 +1,5 @@
 %define version	0.99
-%define release %mkrel 1
+%define release %mkrel 2
 
 Summary: 	GUI Download manager using wget
 Name: 		gwget
@@ -18,6 +18,7 @@ Buildrequires:	libglade2.0-devel
 BuildRequires:	gtk+2-devel >= 2.6.0
 BuildRequires:  epiphany-devel
 BuildRequires:	perl-XML-Parser
+BuildRequires:	desktop-file-utils
 Requires: 	wget >= 1.10
 
 %description
@@ -52,6 +53,12 @@ rm -rf %{buildroot}
 export GCONF_DISABLE_MAKEFILE_SCHEMA_INSTALL=1
 %makeinstall_std
 
+desktop-file-install --vendor='' \
+	--dir=%buildroot%_datadir/applications \
+	--remove-category='Application' \
+	--add-category='FileTransfer;GTK;GNOME' \
+	%buildroot%_datadir/applications/*.desktop
+
 install -D -m 0644 %{SOURCE1} %{buildroot}%{_miconsdir}/%{name}.png
 install -D -m 0644 %{SOURCE2} %{buildroot}%{_iconsdir}/%{name}.png
 install -D -m 0644 %{SOURCE3} %{buildroot}%{_liconsdir}/%{name}.png
@@ -69,15 +76,10 @@ rm -f %{buildroot}%{_libdir}/epiphany-1.*/extensions/*a
 %update_menus
 %update_desktop_database
 %update_icon_cache hicolor
-export GCONF_CONFIG_SOURCE=`gconftool-2 --get-default-source`
-gconftool-2 --makefile-install-rule \
-  %{_sysconfdir}/gconf/schemas/%{name}.schemas &>/dev/null
+%post_install_gconf_schemas %name
 
 %preun
-if [ "$1" = "0" ]; then
- export GCONF_CONFIG_SOURCE=`gconftool-2 --get-default-source`
- gconftool-2 --makefile-uninstall-rule %{_sysconfdir}/gconf/schemas/%{name}.schemas >/dev/null
-fi
+%preun_install_gconf_schemas %name
 
 %postun
 %clean_menus
@@ -107,4 +109,3 @@ rm -rf %{buildroot}
 %defattr (-,root,root)
 %doc COPYING
 %{_libdir}/epiphany/*/extensions/*
-
