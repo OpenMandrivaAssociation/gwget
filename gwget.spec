@@ -11,12 +11,14 @@ Source: 	ftp://ftp.gnome.org/pub/gnome/sources/gwget/%{name}-%{version}.tar.bz2
 Source1:	%{name}-16.png
 Source2:	%{name}-32.png
 Source3:	%{name}-48.png
+#fwang: support epiphany >= 2.19 (from fedora)
+Patch1:		gwget-0.99-epiphany219.patch
 URL: 		http://gwget.sourceforge.net/
 Buildroot: 	%{_tmppath}/%{name}-%{version}-buildroot
 Buildrequires:	libgnomeui2-devel
 Buildrequires:	libglade2.0-devel
 BuildRequires:	gtk+2-devel >= 2.6.0
-BuildRequires:  epiphany-devel epiphany
+BuildRequires:  epiphany-devel
 BuildRequires:	perl-XML-Parser
 BuildRequires:	desktop-file-utils
 Requires: 	wget >= 1.10
@@ -43,6 +45,7 @@ which allows the browser to use gwget as an external file downloader.
 
 %prep
 %setup -q
+%patch1 -p1
 
 %build
 %configure2_5x --enable-epiphany-extension
