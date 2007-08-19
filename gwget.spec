@@ -16,7 +16,7 @@ Buildroot: 	%{_tmppath}/%{name}-%{version}-buildroot
 Buildrequires:	libgnomeui2-devel
 Buildrequires:	libglade2.0-devel
 BuildRequires:	gtk+2-devel >= 2.6.0
-BuildRequires:  epiphany-devel
+BuildRequires:  epiphany-devel epiphany
 BuildRequires:	perl-XML-Parser
 BuildRequires:	desktop-file-utils
 Requires: 	wget >= 1.10
