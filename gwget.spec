@@ -1,5 +1,5 @@
 %define version	0.99
-%define release %mkrel 2
+%define release %mkrel 3
 
 Summary: 	GUI Download manager using wget
 Name: 		gwget
@@ -21,6 +21,7 @@ BuildRequires:	gtk+2-devel >= 2.6.0
 BuildRequires:  epiphany-devel
 BuildRequires:	perl-XML-Parser
 BuildRequires:	desktop-file-utils
+BuildRequires:	intltool
 Requires: 	wget >= 1.10
 
 %description
@@ -47,6 +48,10 @@ which allows the browser to use gwget as an external file downloader.
 %setup -q
 %patch1 -p1
 
+#fix build
+intltoolize --force
+autoreconf
+
 %build
 %configure2_5x --enable-epiphany-extension
 %make CFLAGS="%optflags -Wall"
@@ -55,6 +60,8 @@ which allows the browser to use gwget as an external file downloader.
 rm -rf %{buildroot}
 export GCONF_DISABLE_MAKEFILE_SCHEMA_INSTALL=1
 %makeinstall_std
+
+sed -i -e 's/^\(Icon=.*\).png$/\1/g' $RPM_BUILD_ROOT%{_datadir}/applications/*.desktop
 
 desktop-file-install --vendor='' \
 	--dir=%buildroot%_datadir/applications \
