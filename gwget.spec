@@ -1,5 +1,6 @@
 %define version	0.99
-%define release %mkrel 3
+%define svn	557
+%define release %mkrel 4.%svn.1
 
 Summary: 	GUI Download manager using wget
 Name: 		gwget
@@ -7,7 +8,7 @@ Version: 	%{version}
 Release: 	%{release}
 License: 	GPL
 Group: 		Networking/File transfer
-Source: 	ftp://ftp.gnome.org/pub/gnome/sources/gwget/%{name}-%{version}.tar.bz2
+Source: 	ftp://ftp.gnome.org/pub/gnome/sources/gwget/%{name}-r%{svn}.tar.bz2
 Source1:	%{name}-16.png
 Source2:	%{name}-32.png
 Source3:	%{name}-48.png
@@ -22,6 +23,7 @@ BuildRequires:  epiphany-devel
 BuildRequires:	perl-XML-Parser
 BuildRequires:	desktop-file-utils
 BuildRequires:	intltool
+BuildRequires:	automake1.7
 Requires: 	wget >= 1.10
 
 %description
@@ -45,14 +47,11 @@ This package contains an extension for epiphany, the GNOME web browser,
 which allows the browser to use gwget as an external file downloader.
 
 %prep
-%setup -q
+%setup -q -n %{name}
 %patch1 -p1
 
-#fix build
-intltoolize --force
-autoreconf
-
 %build
+./autogen.sh
 %configure2_5x --enable-epiphany-extension
 %make CFLAGS="%optflags -Wall"
 
