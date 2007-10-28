@@ -14,6 +14,7 @@ Source2:	%{name}-32.png
 Source3:	%{name}-48.png
 #fwang: support epiphany >= 2.19 (from fedora)
 Patch1:		gwget-0.99-epiphany219.patch
+Patch2:		gwget-0.99-fix-dbus-name.patch
 URL: 		http://gwget.sourceforge.net/
 Buildroot: 	%{_tmppath}/%{name}-%{version}-buildroot
 Buildrequires:	libgnomeui2-devel
@@ -23,7 +24,7 @@ BuildRequires:  epiphany-devel
 BuildRequires:	perl-XML-Parser
 BuildRequires:	desktop-file-utils
 BuildRequires:	intltool
-BuildRequires:	automake1.7
+BuildRequires:	automake1.7 gnome-common
 Requires: 	wget >= 1.10
 
 %description
@@ -49,6 +50,7 @@ which allows the browser to use gwget as an external file downloader.
 %prep
 %setup -q -n %{name}
 %patch1 -p1
+%patch2 -p1
 
 %build
 ./autogen.sh
