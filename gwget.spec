@@ -16,6 +16,7 @@ Source3:	%{name}-48.png
 Patch1:		gwget-0.99-epiphany219.patch
 Patch2:		gwget-0.99-fix-dbus-name.patch
 URL: 		http://gwget.sourceforge.net/
+Buildroot: 	%{_tmppath}/%{name}-%{version}-buildroot
 Buildrequires:	libgnomeui2-devel
 Buildrequires:	libglade2.0-devel
 BuildRequires:	gtk+2-devel >= 2.6.0
