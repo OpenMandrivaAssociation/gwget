@@ -83,19 +83,23 @@ rm -f %{buildroot}%{_libdir}/epiphany-1.*/extensions/*a
 
 %find_lang %{name} --with-gnome
  
+%if %mdkversion < 200900
 %post
 %update_menus
 %update_desktop_database
 %update_icon_cache hicolor
 %post_install_gconf_schemas %name
+%endif
 
 %preun
 %preun_install_gconf_schemas %name
 
+%if %mdkversion < 200900
 %postun
 %clean_menus
 %clean_desktop_database
 %clean_icon_cache hicolor
+%endif
 
 %clean
 rm -rf %{buildroot}
