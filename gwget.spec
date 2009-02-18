@@ -14,18 +14,17 @@ Source1:	%{name}-16.png
 Source2:	%{name}-32.png
 Source3:	%{name}-48.png
 Patch0:		gwget-1.00-fix-str-fmt.patch
-Patch1:		gwget-1.00-new-epiphany.patch
+Patch1:     	gwget-1.0.1-new-epiphany.patch
 Patch2:		gwget-0.99-fix-dbus-name.patch
 Patch3:		gwget-1.00-linkage.patch
+Patch4:		gwget-1.0.1-desktop-entry.patch
 URL: 		http://gwget.sourceforge.net/
 Buildroot: 	%{_tmppath}/%{name}-%{version}-buildroot
 Buildrequires:	libgnomeui2-devel
 Buildrequires:	libglade2.0-devel
 BuildRequires:	gtk+2-devel >= 2.6.0
 BuildRequires:  epiphany-devel
-BuildRequires:	perl-XML-Parser
 BuildRequires:	dbus-glib-devel
-BuildRequires:	desktop-file-utils
 BuildRequires:	intltool
 BuildRequires:	automake gnome-common
 Requires: 	wget >= 1.10
@@ -56,24 +55,17 @@ which allows the browser to use gwget as an external file downloader.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
+autoreconf -fi
 
 %build
-autoreconf -fi
-%configure2_5x --enable-epiphany-extension
+%configure2_5x --disable-static
 %make
 
 %install
 rm -rf %{buildroot}
 export GCONF_DISABLE_MAKEFILE_SCHEMA_INSTALL=1
 %makeinstall_std
-
-sed -i -e 's/^\(Icon=.*\).png$/\1/g' $RPM_BUILD_ROOT%{_datadir}/applications/*.desktop
-
-desktop-file-install --vendor='' \
-	--dir=%buildroot%_datadir/applications \
-	--remove-category='Application' \
-	--add-category='FileTransfer;GTK;GNOME' \
-	%buildroot%_datadir/applications/*.desktop
 
 install -D -m 0644 %{SOURCE1} %{buildroot}%{_miconsdir}/%{name}.png
 install -D -m 0644 %{SOURCE2} %{buildroot}%{_iconsdir}/%{name}.png
@@ -84,7 +76,6 @@ install -D -m 0644 %{SOURCE3} %{buildroot}%{_iconsdir}/hicolor/48x48/apps/%{name
 
 # remove files not bundled
 rm -rf %{buildroot}%{_prefix}/doc/ %{buildroot}%{_includedir}
-rm -f %{buildroot}%{_libdir}/epiphany-1.*/extensions/*a
 
 %find_lang %{name} --with-gnome
  
