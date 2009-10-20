@@ -5,7 +5,7 @@
 
 Summary: 	GUI Download manager using wget
 Name: 		gwget
-Version: 	1.0.3
+Version: 	1.0.4
 Release: 	%mkrel 1
 License: 	GPLv2+
 Group: 		Networking/File transfer
