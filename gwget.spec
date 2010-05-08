@@ -6,7 +6,7 @@
 Summary: 	GUI Download manager using wget
 Name: 		gwget
 Version: 	1.0.4
-Release: 	%mkrel 1
+Release: 	%mkrel 2
 License: 	GPLv2+
 Group: 		Networking/File transfer
 Source: 	http://ftp.gnome.org/pub/GNOME/sources/%name/%{name}-%{version}.tar.bz2
@@ -16,6 +16,7 @@ Source3:	%{name}-48.png
 Patch0:		gwget-1.0.2-format-strings.patch
 Patch2:		gwget-0.99-fix-dbus-name.patch
 Patch3:		gwget-1.00-linkage.patch
+Patch4:		gwget-1.0.4-epiphany-230.patch
 URL: 		http://gwget.sourceforge.net/
 Buildroot: 	%{_tmppath}/%{name}-%{version}-buildroot
 Buildrequires:	libgnomeui2-devel
@@ -52,9 +53,10 @@ which allows the browser to use gwget as an external file downloader.
 %patch0 -p1 -b .format
 %patch2 -p1
 %patch3 -p1
-autoreconf -fi
+%patch4 -p0 -b .ep
 
 %build
+autoreconf -fi
 %configure2_5x --disable-static
 %make
 
