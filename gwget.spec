@@ -6,7 +6,7 @@
 Summary: 	GUI Download manager using wget
 Name: 		gwget
 Version: 	1.0.4
-Release: 	%mkrel 3
+Release: 	%mkrel 4
 License: 	GPLv2+
 Group: 		Networking/File transfer
 Source: 	http://ftp.gnome.org/pub/GNOME/sources/%name/%{name}-%{version}.tar.bz2
