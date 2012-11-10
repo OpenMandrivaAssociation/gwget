@@ -1,0 +1,7 @@
+--- gwget-0.99/data/org.gnome.gwget.service.in.orig	2007-10-28 12:22:36.000000000 +0100
++++ gwget-0.99/data/org.gnome.gwget.service.in	2007-10-28 12:23:19.000000000 +0100
+@@ -1,3 +1,3 @@
+ [D-BUS Service]
+-Name=org.gnome.gwget
++Name=org.gnome.gwget.ApplicationService
+ Exec=@bindir@/gwget

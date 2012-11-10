@@ -1,0 +1,66 @@
+diff -p -up gwget-1.0.2/epiphany-extension/ephy-gwget-extension.c.format gwget-1.0.2/epiphany-extension/ephy-gwget-extension.c
+--- gwget-1.0.2/epiphany-extension/ephy-gwget-extension.c.format	2009-06-18 19:25:43.000000000 +0200
++++ gwget-1.0.2/epiphany-extension/ephy-gwget-extension.c	2009-06-18 21:04:41.000000000 +0200
+@@ -60,7 +60,7 @@ handle_content_cb (EphyEmbedSingle *sing
+ 
+ 	connection = dbus_g_bus_get (DBUS_BUS_STARTER, &error);
+ 	if (connection == NULL) {
+-		g_warning (error->message);
++		g_warning ("%s",error->message);
+ 		g_error_free (error);
+ 		return FALSE;
+ 	}
+@@ -75,7 +75,7 @@ handle_content_cb (EphyEmbedSingle *sing
+ 					DBUS_TYPE_INVALID);
+ 
+ 	if (!dbus_g_proxy_end_call (remote_object, call, &error, DBUS_TYPE_INVALID)) {
+-		g_warning (error->message);
++		g_warning ("%s",error->message);
+ 		g_clear_error (&error);
+ 		return FALSE;
+ 	}
+@@ -85,7 +85,7 @@ handle_content_cb (EphyEmbedSingle *sing
+ 					G_TYPE_INVALID);
+ 
+ 	if (!dbus_g_proxy_end_call (remote_object, call, &error, G_TYPE_INVALID)) {
+-		g_warning (error->message);
++		g_warning ("%s",error->message);
+ 		g_clear_error (&error);
+ 		return FALSE;
+ 	}
+@@ -94,7 +94,7 @@ handle_content_cb (EphyEmbedSingle *sing
+ 		G_TYPE_UINT, &timestamp,
+ 		G_TYPE_INVALID,
+ 		G_TYPE_INVALID)) {
+-			g_warning (error->message);
++			g_warning ("%s",error->message);
+ 			g_clear_error (&error);
+ 			return FALSE;
+ 	}
+@@ -108,7 +108,7 @@ handle_content_cb (EphyEmbedSingle *sing
+ 					DBUS_TYPE_INVALID);
+ 
+ 	if (!dbus_g_proxy_end_call (remote_object, call, &error, DBUS_TYPE_INVALID)) {
+-		g_warning (error->message);
++		g_warning ("%s",error->message);
+ 		g_clear_error (&error);
+ 		g_free (uri);
+ 		continue;
+@@ -121,7 +121,7 @@ handle_content_cb (EphyEmbedSingle *sing
+ 					G_TYPE_INVALID);
+ 
+ 	if (!dbus_g_proxy_end_call (remote_object, call, &error, G_TYPE_INVALID)) {
+-		g_warning (error->message);
++		g_warning ("%s",error->message);
+ 		g_clear_error (&error);
+ 		g_free (uri);
+ 		continue;
+@@ -133,7 +133,7 @@ handle_content_cb (EphyEmbedSingle *sing
+ 				G_TYPE_UINT, &timestamp,
+ 				G_TYPE_INVALID,
+ 				G_TYPE_INVALID)) {
+-		g_warning (error->message);
++		g_warning ("%s",error->message);
+ 		g_clear_error (&error);
+ 	}
+ #endif

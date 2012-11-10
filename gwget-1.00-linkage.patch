@@ -1,0 +1,10 @@
+--- gwget-1.00/epiphany-extension/Makefile.am~	2009-02-12 22:53:51.000000000 +0100
++++ gwget-1.00/epiphany-extension/Makefile.am	2009-02-12 23:01:20.000000000 +0100
+@@ -22,6 +22,7 @@
+  	$(top_builddir)/src/gwget-application.c  
+ 
+ libgwgetextension_la_LDFLAGS = -module -avoid-version 
++libgwgetextension_la_LIBADD = $(GWGET_LIBS) $(EPIPHANY_DEPENDENCY_LIBS) $(GNOME_LIBS)
+ 
+ extensionxmldir = $(extensiondir)
+ extensionxml_in_files = gwget.xml.in.in
