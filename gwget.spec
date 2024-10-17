@@ -6,7 +6,7 @@ Version:	1.0.4
 Release:	5
 License:	GPLv2+
 Group:		Networking/File transfer
-URL:		http://gwget.sourceforge.net/
+URL:		https://gwget.sourceforge.net/
 Source:		http://ftp.gnome.org/pub/GNOME/sources/%{name}/%{name}-%{version}.tar.bz2
 Source1:	%{name}-16.png
 Source2:	%{name}-32.png
